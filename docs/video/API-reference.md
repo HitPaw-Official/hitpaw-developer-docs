@@ -2,7 +2,15 @@
 sidebar_position: 3
 ---
 
+import LLMPageActions from '@site/src/components/LLMPageActions';
+
 # API Documentation
+
+<LLMPageActions
+  llmsPath="/video/API-reference/llms.txt"
+  pageTitle="HitPaw Video API Reference"
+  publicPageUrl="https://developer.hitpaw.com/video/API-reference"
+/>
 
 ## Base URL
 ```

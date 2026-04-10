@@ -1,0 +1,213 @@
+# HitPaw Video API Reference
+
+Public page: https://developer.hitpaw.com/video/API-reference
+
+## Base URL
+https://api-base.hitpaw.com
+
+## Authentication
+All API requests require authentication.
+
+- Don't have an API key? Get started by purchasing an API key:
+  https://www.hitpaw.com/hitpaw-api.html
+- Already have your API key? Test the API directly in the browser:
+  https://playground.hitpaw.com/
+
+## Endpoint: POST /api/video-enhancer
+Submit a video enhancement task for video super-resolution processing.
+
+### Request body
+```json
+{
+  "video_url": "string",
+  "model_name": "string",
+  "resolution": [1920, 1080],
+  "extension": "string",
+  "original_resolution": [1280, 720]
+}
+```
+
+### Request parameters
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| video_url | string | Yes | URL of the video to be enhanced |
+| model_name | string | Yes | Model name to use for enhancement |
+| resolution | array[integer] | Yes | Target resolution as `[width, height]` |
+| extension | string | No | File extension. Default is `.mp4`. |
+| original_resolution | array[integer] | No | Original video resolution as `[width, height]` |
+
+### Response
+```json
+{
+  "code": 200,
+  "message": "OK",
+  "data": {
+    "job_id": "f5007c0b-e902-4070-8c75-f337d896168f",
+    "consume_coins": 75
+  }
+}
+```
+
+### Response fields
+| Field | Type | Description |
+|-------|------|-------------|
+| job_id | string | Unique identifier for the enhancement job |
+| consume_coins | integer | Number of coins consumed for this task |
+
+### Example request: cURL
+```bash
+curl -X POST https://api-base.hitpaw.com/api/video-enhancer \
+  -H "Content-Type: application/json" \
+  -H "Apikey: YOUR_API_KEY" \
+  -d '{
+    "video_url": "https://example.com/video.mp4",
+    "model_name": "video_enhance_v2",
+    "resolution": [1920, 1080],
+    "extension": ".mp4",
+    "original_resolution": [1280, 720]
+  }'
+```
+
+### Example request: Python
+```python
+import json
+import requests
+
+url = "https://api-base.hitpaw.com/api/video-enhancer"
+
+headers = {
+    "Content-Type": "application/json",
+    "Apikey": "YOUR_API_KEY"
+}
+
+payload = {
+    "video_url": "https://example.com/video.mp4",
+    "model_name": "video_enhance_v2",
+    "resolution": [1920, 1080],
+    "extension": ".mp4",
+    "original_resolution": [1280, 720]
+}
+
+response = requests.post(url, headers=headers, data=json.dumps(payload))
+
+if response.status_code == 200:
+    result = response.json()
+    print(f"Job ID: {result['job_id']}")
+    print(f"Consume Coins: {result['consume_coins']}")
+else:
+    print(f"Error: {response.status_code}")
+    print(response.text)
+```
+
+## Available models
+| Display Name | API `model_name` Value |
+|--------------|------------------------|
+| Face Soft Model 2x | `face_soft_2x` |
+| Portrait Restore Model 1x/2x | `portrait_restore_1x` / `portrait_restore_2x` |
+| General Restore Model 1x/2x/4x | `general_restore_1x` / `general_restore_2x` / `general_restore_4x` |
+| Ultra HD Model 2x | `ultrahd_restore_2x` |
+| Generative Model 1x | `generative_1x` |
+
+## Model specifications
+| API `model_name` | Supported Input Formats | Max Input Resolution | Supported Output Formats | Max Output Resolution | Duration |
+|------------------|-------------------------|----------------------|--------------------------|----------------------|----------|
+| All video models | dv, mlv, m2ts, m2t, m2v, nut, ser, 3g2, 3gp, asf, avi, divx, f4v, flv, h261, h263, m4v, mkv, mov, mp4, mpeg, mpeg4, mpg, mxf, ogv, rm, rmvb, webm, wmv, 3gp2, dmsm, dvdmedia, dvr-ms, trp, vob, vro, gif, xvid | No limit | mp4, mov, mkv, m4v, avi, gif | 36 MP total pixels | 0.5s to 1 hour |
+
+## Endpoint: POST /api/task-status
+Query the status of a submitted enhancement job.
+
+### Request body
+```json
+{
+  "job_id": "string"
+}
+```
+
+### Request parameters
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| job_id | string | Yes | Job ID returned from photo-enhancer or video-enhancer |
+
+### Response
+```json
+{
+  "code": 200,
+  "message": "OK",
+  "data": {
+    "job_id": "string",
+    "status": "string",
+    "res_url": "string",
+    "original_url": "string"
+  }
+}
+```
+
+### Response fields
+| Field | Type | Description |
+|-------|------|-------------|
+| job_id | string | Job identifier |
+| status | string | Current job status |
+| res_url | string | URL of the processed file when status is `COMPLETED` |
+| original_url | string | URL of the original input file |
+
+### Status values
+| Status | Description |
+|--------|-------------|
+| CONVERTING | Job is currently being processed |
+| COMPLETED | Job completed successfully |
+| ERROR | Job failed |
+
+### Example request: cURL
+```bash
+curl -X POST https://api-base.hitpaw.com/api/task-status \
+  -H "Content-Type: application/json" \
+  -H "Apikey: YOUR_API_KEY" \
+  -d '{
+    "job_id": "abc123def456"
+  }'
+```
+
+### Example request: Python
+```python
+import json
+import time
+import requests
+
+url = "https://api-base.hitpaw.com/api/task-status"
+
+headers = {
+    "Content-Type": "application/json",
+    "Apikey": "YOUR_API_KEY"
+}
+
+payload = {
+    "job_id": "abc123def456"
+}
+
+max_attempts = 60
+attempt = 0
+
+while attempt < max_attempts:
+    response = requests.post(url, headers=headers, data=json.dumps(payload))
+
+    if response.status_code == 200:
+        result = response.json()
+        status = result['status']
+        print(f"Attempt {attempt + 1}: Status = {status}")
+
+        if status == "COMPLETED":
+            print("Job completed successfully!")
+            print(f"Result URL: {result['res_url']}")
+            print(f"Original URL: {result['original_url']}")
+            break
+        if status == "ERROR":
+            print("Job failed with error")
+            break
+
+        time.sleep(5)
+        attempt += 1
+    else:
+        print(f"Error: {response.status_code}")
+        print(response.text)
+        break
+```

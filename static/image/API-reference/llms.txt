@@ -1,0 +1,235 @@
+# HitPaw Image API Reference
+
+Public page: https://developer.hitpaw.com/image/API-reference
+
+## Base URL
+https://api-base.hitpaw.com
+
+## Authentication
+All API requests require authentication.
+
+- Don't have an API key? Get started by purchasing an API key:
+  https://www.hitpaw.com/hitpaw-api.html
+- Already have your API key? Test the API directly in the browser:
+  https://playground.hitpaw.com/
+
+## Endpoint: POST /api/photo-enhancer
+Submit a photo enhancement task for image super-resolution processing.
+
+### Request body
+```json
+{
+  "model_name": "general_2x",
+  "img_url": "https://i.ibb.co/TDLJLgVR/face-model-before.jpg",
+  "extension": ".jpg",
+  "exif": true,
+  "DPI": 300
+}
+```
+
+### Request parameters
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| model_name | string | Yes | The model name to use. The suffix (2x/4x) determines the output resolution. |
+| img_url | string | Yes | URL of the image to be enhanced |
+| extension | string | Yes | File extension of the image, such as `.jpg` or `.png` |
+| exif | boolean | No | Whether to preserve EXIF data. Default is `false`. |
+| DPI | integer | No | Target DPI metadata for the output image. Supported only for non-generative models. This does not affect pixel scaling. |
+
+### Response
+```json
+{
+  "code": 200,
+  "message": "OK",
+  "data": {
+    "job_id": "f5007c0b-e902-4070-8c75-f337d896168f",
+    "consume_coins": 75
+  }
+}
+```
+
+### Response fields
+| Field | Type | Description |
+|-------|------|-------------|
+| job_id | string | Unique identifier for the enhancement job |
+| consume_coins | integer | Number of coins consumed for this task |
+
+### Example request: cURL
+```bash
+curl -X POST https://api-base.hitpaw.com/api/photo-enhancer \
+  -H "Content-Type: application/json" \
+  -H "Apikey: YOUR_API_KEY" \
+  -d '{
+    "model_name": "general_2x",
+    "img_url": "https://example.com/image.jpg",
+    "extension": ".jpg",
+    "exif": true,
+    "DPI": 300
+  }'
+```
+
+### Example request: Python
+```python
+import json
+import requests
+
+url = "https://api-base.hitpaw.com/api/photo-enhancer"
+
+headers = {
+    "Content-Type": "application/json",
+    "Apikey": "YOUR_API_KEY"
+}
+
+payload = {
+    "model_name": "general_2x",
+    "img_url": "https://example.com/image.jpg",
+    "extension": ".jpg",
+    "exif": True,
+    "DPI": 300
+}
+
+response = requests.post(url, headers=headers, data=json.dumps(payload))
+
+if response.status_code == 200:
+    result = response.json()
+    print(f"Job ID: {result['job_id']}")
+    print(f"Consume Coins: {result['consume_coins']}")
+else:
+    print(f"Error: {response.status_code}")
+    print(response.text)
+```
+
+## Output resolution control
+The output resolution is determined by `model_name`.
+
+- `2x` models double width and height.
+- `4x` models quadruple width and height.
+- `1x` models keep the original resolution.
+
+The `DPI` parameter changes print metadata only. It does not change digital pixel dimensions.
+
+### Example scenarios
+| Input Resolution | Selected Model | Target DPI | Output Resolution | Metadata DPI |
+|------------------|----------------|------------|-------------------|--------------|
+| 1024 x 1024 px | `face_2x` | 300 | 2048 x 2048 px | 300 |
+| 1024 x 1024 px | `face_4x` | 72 | 4096 x 4096 px | 72 |
+| 1024 x 1024 px | `detail_denoise_1x` | 300 | 1024 x 1024 px | 300 |
+
+## Available models
+| Display Name | API `model_name` Value |
+|--------------|------------------------|
+| Face Clear Model 2x/4x | `face_2x` / `face_4x` |
+| Face Natural Model 2x/4x | `face_v2_2x` / `face_v2_4x` |
+| General Enhance Model 2x/4x | `general_2x` / `general_4x` |
+| High Fidelity Model 2x/4x | `high_fidelity_2x` / `high_fidelity_4x` |
+| Sharp Denoise Model 1x | `sharpen_denoise_1x` |
+| Detail Denoise Model 1x | `detail_denoise_1x` |
+| Generative Portrait Model 1x/2x/4x | `generative_portrait_1x` / `generative_portrait_2x` / `generative_portrait_4x` |
+| Generative Enhance Model 1x/2x/4x | `generative_1x` / `generative_2x` / `generative_4x` |
+
+## Model specifications
+| Category | DPI Support | Max Input Resolution | Max Output Resolution | Supported Formats |
+|----------|-------------|----------------------|-----------------------|-------------------|
+| Enhancement and denoise models: `face_...`, `general_...`, `high_fidelity_...`, `sharpen_denoise_1x`, `detail_denoise_1x` | Yes | 70 MP | 432 MP | bmp, jpeg, jpg, png, jfif, tga, tiff, webp, heif |
+| Generative models: `generative_portrait_...`, `generative_...` | No | 34 MP | 34 MP | bmp, jpeg, jpg, png, jfif, tga, tiff, webp, heif |
+
+The `DPI` parameter is ignored for generative models.
+
+## Endpoint: POST /api/task-status
+Query the status of a submitted enhancement job.
+
+### Request body
+```json
+{
+  "job_id": "string"
+}
+```
+
+### Request parameters
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| job_id | string | Yes | Job ID returned from the enhancer endpoint |
+
+### Response
+```json
+{
+  "code": 200,
+  "message": "OK",
+  "data": {
+    "job_id": "string",
+    "status": "string",
+    "res_url": "string",
+    "original_url": "string"
+  }
+}
+```
+
+### Response fields
+| Field | Type | Description |
+|-------|------|-------------|
+| job_id | string | Job identifier |
+| status | string | Current job status |
+| res_url | string | URL of the processed file when status is `COMPLETED` |
+| original_url | string | URL of the original input file |
+
+### Status values
+| Status | Description |
+|--------|-------------|
+| CONVERTING | Job is currently being processed |
+| COMPLETED | Job completed successfully |
+| ERROR | Job failed |
+
+### Example request: cURL
+```bash
+curl -X POST https://api-base.hitpaw.com/api/task-status \
+  -H "Content-Type: application/json" \
+  -H "Apikey: YOUR_API_KEY" \
+  -d '{
+    "job_id": "abc123def456"
+  }'
+```
+
+### Example request: Python
+```python
+import json
+import time
+import requests
+
+url = "https://api-base.hitpaw.com/api/task-status"
+
+headers = {
+    "Content-Type": "application/json",
+    "Apikey": "YOUR_API_KEY"
+}
+
+payload = {
+    "job_id": "abc123def456"
+}
+
+max_attempts = 60
+attempt = 0
+
+while attempt < max_attempts:
+    response = requests.post(url, headers=headers, data=json.dumps(payload))
+
+    if response.status_code == 200:
+        result = response.json()
+        status = result['status']
+        print(f"Attempt {attempt + 1}: Status = {status}")
+
+        if status == "COMPLETED":
+            print("Job completed successfully!")
+            print(f"Result URL: {result['res_url']}")
+            print(f"Original URL: {result['original_url']}")
+            break
+        if status == "ERROR":
+            print("Job failed with error")
+            break
+
+        time.sleep(5)
+        attempt += 1
+    else:
+        print(f"Error: {response.status_code}")
+        print(response.text)
+        break
+```

@@ -1,4 +1,12 @@
+import LLMPageActions from '@site/src/components/LLMPageActions';
+
 # API Documentation
+
+<LLMPageActions
+  llmsPath="/image/API-reference/llms.txt"
+  pageTitle="HitPaw Image API Reference"
+  publicPageUrl="https://developer.hitpaw.com/image/API-reference"
+/>
 
 ## Base URL
 ```

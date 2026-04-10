@@ -1,0 +1,188 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5rem;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 0.9rem;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.trigger:hover {
+  transform: translateY(-1px);
+  border-color: rgba(130, 63, 255, 0.28);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.16);
+}
+
+.triggerLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  color: #64748b;
+  transform: rotate(180deg);
+  transition: transform 0.18s ease;
+}
+
+.chevronOpen {
+  transform: rotate(0deg);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  z-index: 20;
+  width: min(24rem, calc(100vw - 2rem));
+  padding: 0.5rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(12px);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  padding: 0.85rem 0.9rem;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.menuItem:hover {
+  background: rgba(130, 63, 255, 0.08);
+  transform: translateX(2px);
+  text-decoration: none;
+  color: inherit;
+}
+
+.itemIcon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 10px;
+  background: rgba(130, 63, 255, 0.1);
+  color: #4338ca;
+}
+
+.itemBody {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.itemHeading {
+  color: #0f172a;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.itemDescription {
+  color: #64748b;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.iconSvg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.externalIcon {
+  width: 1rem;
+  height: 1rem;
+  color: #94a3b8;
+}
+
+.wordmarkIcon {
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 640px) {
+  .wrapper {
+    justify-content: stretch;
+  }
+
+  .trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .menu {
+    width: 100%;
+  }
+}
+
+[data-theme='dark'] .trigger {
+  border-color: rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.92);
+  box-shadow: 0 16px 32px rgba(2, 6, 23, 0.42);
+  color: #e2e8f0;
+}
+
+[data-theme='dark'] .trigger:hover {
+  border-color: rgba(151, 95, 255, 0.45);
+}
+
+[data-theme='dark'] .chevron {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .menu {
+  border-color: rgba(148, 163, 184, 0.12);
+  background: rgba(15, 23, 42, 0.98);
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.52);
+}
+
+[data-theme='dark'] .menuItem:hover {
+  background: rgba(130, 63, 255, 0.18);
+}
+
+[data-theme='dark'] .itemIcon {
+  background: rgba(130, 63, 255, 0.18);
+  color: #c4b5fd;
+}
+
+[data-theme='dark'] .itemHeading {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .itemDescription,
+[data-theme='dark'] .externalIcon {
+  color: #94a3b8;
+}
