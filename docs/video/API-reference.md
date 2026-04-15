@@ -49,6 +49,10 @@ All API requests require authentication.
 | extension | string | No | File extension (default: ".mp4") |
 | original_resolution | array[integer] | No | Original video resolution [width, height] |
 
+:::tip Use Pre-sign Upload for Better Reliability
+If you encounter download failures or network instability when our servers attempt to fetch your resources via `video_url`, we highly recommend using our [OSS Pre-sign Upload API](../common/oss-presign-put-api.md) to securely upload your files first. Provide the generated `access_url` as your `video_url` to guarantee a 100% success rate for resource retrieval.
+:::
+
 **Response:**
 ```json
 {
