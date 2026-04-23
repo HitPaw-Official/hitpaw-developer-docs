@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+description: Comprehensive API reference for HitPaw Image Enhancement, including endpoints for photo enhancement and task status queries.
 ---
 
 import LLMPageActions from '@site/src/components/LLMPageActions';
@@ -465,3 +466,8 @@ if __name__ == "__main__":
 ## Support
 
 For API key requests, billing questions, or technical support, please contact our support team.
+
+:::tip Ready to Start?
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw Enhancement API.
+:::
+

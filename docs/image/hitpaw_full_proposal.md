@@ -116,6 +116,9 @@ Use this page together with the API model list when selecting a model:
 
 ## Reference Links
 
-- [Image API Reference](./API-reference.md)
-- [Available Models](./available-models.md)
-- [Introduction](./Introduction.md)
+- [HitPaw MCP Server on GitHub](https://github.com/HitPaw-Official/hitpaw-mcp-server)
+
+:::tip Ready to Start?
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw Enhancement API.
+:::
+

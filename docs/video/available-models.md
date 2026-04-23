@@ -116,3 +116,7 @@ Suitable for general video content improvement, such as remastering old clips, f
     <source src={compare_general_restore_video_2} type="video/mp4" />
   </video>
 </div>
+
+:::tip Ready to Start?
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw Enhancement API.
+:::

@@ -160,3 +160,8 @@ If you are integrating HitPaw into your own product or backend, start with the [
 - [Available Models](./available-models.md)
 - [Image MCP Integration](../image/MCP.md)
 - [HitPaw MCP Server on GitHub](https://github.com/HitPaw-Official/hitpaw-mcp-server)
+
+:::tip Ready to Start?
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw Enhancement API.
+:::
+

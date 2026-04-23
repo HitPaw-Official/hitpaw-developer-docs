@@ -53,3 +53,8 @@ Once you have your API key, set it as the `APIKEY` header of your requests.
 
 ## Contact
 Please reach out to *[support@hitpaw.com](mailto:support@hitpaw.com)*. with any questions or for enterprise inquiries.
+
+:::tip Ready to Start?
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw Enhancement API.
+:::
+

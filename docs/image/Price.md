@@ -39,3 +39,8 @@ Generative models are priced based on the creative reconstruction level and outp
 | **Gen Ultra HD** | 8 - 12 MP | 4K+ | **60** | $0.06 |
 | **Gen Extreme HD** | 12 - 24 MP | 5K / 6K | **80** | $0.08 |
 | **Gen Cinema** | 24 - 34 MP | 8K | **150** | $0.15 |
+
+:::tip Ready to Start?
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to our Image Enhancement API.
+:::
+

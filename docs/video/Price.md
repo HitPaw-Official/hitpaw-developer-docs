@@ -79,3 +79,8 @@ Video processing is billed **per second** of output video. The rate is determine
 | **4K (3840x2160)** | 30 - 60 fps | **113** | $0.113 |
 | **4K (3840x2160)** | 60 - 120 fps | **225** | $0.225 |
 | **4K (3840x2160)** | 120 fps | **338** | $0.338 |
+
+:::tip Ready to Start?
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to our Video Enhancement API.
+:::
+

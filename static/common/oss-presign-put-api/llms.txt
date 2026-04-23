@@ -1,0 +1,70 @@
+# HitPaw OSS Pre-sign Upload API
+
+Public page: https://developer.hitpaw.com/common/oss-presign-put-api
+
+## Overview
+
+The pre-sign upload mechanism allows clients (Web, Mobile, Desktop) to upload files directly to Alibaba Cloud OSS using a signed URL.
+
+**Workflow:**
+1. Request a pre-signed PUT URL from the server.
+2. Direct upload the file body to the `upload_url` using an HTTP PUT request.
+3. Access the file via the `access_url`.
+
+## Step 1: Get Pre-Signed Upload URL (Single)
+**Endpoint:** `POST /api/oss/presign-put`
+
+### Request body
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `filename` | string | Yes | Filename including extension (e.g., "photo.jpg") |
+| `content_type` | string | Yes | Content-Type of the file |
+| `expire_seconds` | int | No | URL validity in seconds (60-7200). Default: 3600 |
+
+### Response
+```json
+{
+  "code": 0,
+  "data": {
+    "upload_url": "https://...",
+    "access_url": "https://...",
+    "object_key": "...",
+    "content_type": "...",
+    "expire_at": 1742954400
+  }
+}
+```
+
+## Step 1: Get Pre-Signed Upload URLs (Batch)
+**Endpoint:** `POST /api/oss/presign-put/batch`
+
+### Request body
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `files` | array | Yes | List of files (1-20 items) |
+| `files[].filename` | string | Yes | Filename |
+| `files[].content_type` | string | Yes | Content-Type |
+
+## Step 2: Upload File to OSS
+**Endpoint:** `PUT {upload_url}`
+
+- **Header:** `Content-Type` must match the value from Step 1.
+- **Body:** Binary file data.
+
+## Supported File Types
+- **Image:** .jpg, .jpeg, .png, .gif, .webp, .bmp
+- **Video:** .mp4, .mov, .avi, .mkv, .webm
+- **Audio:** .mp3, .wav, .aac, .m4a
+- **Document:** .pdf
+
+## cURL Example
+```bash
+# 1. Get URL
+curl -X POST https://api.example.com/api/oss/presign-put \
+   -H "Content-Type: application/json" \
+   -H "Apikey: YOUR_API_KEY" \
+   -d '{"filename": "photo.jpg", "content_type": "image/jpeg"}'
+
+# 2. Upload
+curl -X PUT -H "Content-Type: image/jpeg" -T ./photo.jpg "<upload_url>"
+```

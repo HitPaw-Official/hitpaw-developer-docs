@@ -159,3 +159,7 @@ Ideal for images where preserving subtle textures is more important than achievi
 <div style={{ textAlign: 'center' }}>
   <img src={require('./img/comparison-detail_denoise.jpg').default} width="80%" />
 </div>
+
+:::tip Ready to Start?
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw Enhancement API.
+:::

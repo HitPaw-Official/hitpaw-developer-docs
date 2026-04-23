@@ -1,7 +1,17 @@
 ﻿---
 sidebar_position: 1
 title: OSS Pre-sign Upload
+description: API documentation for HitPaw OSS Pre-sign Upload, enabling secure and direct file uploads to cloud storage.
 ---
+
+import LLMPageActions from '@site/src/components/LLMPageActions';
+
+<LLMPageActions
+  llmsPath="/common/oss-presign-put-api/llms.txt"
+  pageTitle="HitPaw OSS Pre-sign Upload API"
+  publicPageUrl="https://developer.hitpaw.com/common/oss-presign-put-api"
+/>
+
 # OSS Pre-sign Upload API
 
 ## Overview
@@ -415,3 +425,8 @@ suspend fun presignUpload(file: File): String {
 | 400              | Parameter error: missing filename, extension not in whitelist, etc.         |
 | 401              | Authentication failed                                                       |
 | 500              | Server error: OSS client not initialized, signature generation failed, etc. |
+
+:::tip Ready to Start?
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw Enhancement API.
+:::
+

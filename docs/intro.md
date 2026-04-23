@@ -51,3 +51,7 @@ Video restoration requires a specialized approach utilizing **Temporal Stability
 *   **Quality:** Industry-defining results fit for professional use cases, from Hollywood studios to AAA game development.
 *   **Fidelity:** Unlike generic filters, our models are trained to preserve the original identity of subjects and the authentic texture of surfaces.
 *   **Versatility:** With both **Standard** (accurate) and **Generative** (creative) options, you can choose the exact tool needed for restoration vs. reconstruction workflows.
+
+:::tip Ready to Start?
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw Enhancement API.
+:::
