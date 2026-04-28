@@ -153,7 +153,7 @@ Use the following values for the `model_name` parameter in your request:
 | Sharp Denoise Model 1x | `sharpen_denoise_1x` |
 | Detail Denoise Model 1x | `detail_denoise_1x` |
 | Generative Portrait Model 1x/2x/4x | `generative_portrait_1x`/`generative_portrait_2x`/`generative_portrait_4x` |
-| Generative Enhance Model 1x/2x/4x | `generative_1x`/`generative_2x`/`generative_4x` |
+| Generative Enhance Model 1x/2x/4x/6x/8x | `generative_1x`/`generative_2x`/`generative_4x`/`generative_6x`/`generative_8x` |
 
 ## Model Specifications
 
