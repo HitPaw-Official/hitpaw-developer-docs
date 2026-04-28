@@ -1,0 +1,227 @@
+---
+sidebar_position: 1
+description: API reference for HitPaw Image Segmentation. Automatically recognize and extract the main subject of an image.
+---
+
+# Image Segmentation API
+
+## Base URL
+```
+https://api-base.hitpaw.com
+```
+
+## Authentication
+All API requests require authentication. 
+*   **Don't have an API key?** Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html).
+
+## Endpoints
+
+### Initialize Task
+
+**Endpoint:** `POST /api/image-segmentation`
+
+**Description:** Submit an image segmentation (matting) task for automatic recognition and extraction of the main subject. The result will include a transparent background image and a mask image.
+
+**Request Body:**
+```json
+{
+    "file_url": "https://example.com/image.jpg"
+}
+```
+
+**Request Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| file_url | string | Yes | URL of the image to be processed. Must be publicly accessible. |
+
+**Response:**
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": {
+        "job_id": "f5007c0b-e902-4070-8c75-f337d896168f",
+        "consume_coins": 20
+    }
+}
+```
+
+**Response Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| job_id | string | Unique identifier for the segmentation job |
+| consume_coins | integer | Number of coins consumed for this task |
+
+**Example Request (cURL):**
+```bash
+curl -X POST https://api-base.hitpaw.com/api/image-segmentation \
+  -H "Content-Type: application/json" \
+  -H "Apikey: YOUR_API_KEY" \
+  -d '{
+    "file_url": "https://example.com/image.jpg"
+  }'
+```
+
+---
+
+### Task Status
+
+**Endpoint:** `POST /api/task-status`
+
+**Description:** Query the status of a submitted segmentation job. Use this endpoint to poll for job completion.
+
+**Request Body:**
+```json
+{
+  "job_id": "string"
+}
+```
+
+**Request Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| job_id | string | Yes | Job ID returned from the image-segmentation endpoint |
+
+**Response:**
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": {
+        "job_id": "string",
+        "status": "string",
+        "res_url": "string",
+        "mask_url": "string",
+        "original_url": "string"
+    }
+}
+```
+
+**Response Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| job_id | string | Job identifier |
+| status | string | Current job status (`CONVERTING`, `COMPLETED`, or `ERROR`) |
+| res_url | string | URL of the matted file with transparent background (available when status is "COMPLETED") |
+| mask_url | string | URL of the mask file (available when status is "COMPLETED") |
+| original_url | string | URL of the original input file |
+
+**Example Request (cURL):**
+```bash
+curl -X POST https://api-base.hitpaw.com/api/task-status \
+  -H "Content-Type: application/json" \
+  -H "Apikey: YOUR_API_KEY" \
+  -d '{
+    "job_id": "abc123def456"
+  }'
+```
+
+---
+
+## Error Codes
+
+### General Errors
+
+| Error Code | HTTP Status | Message |
+|------------|-------------|---------|
+| 100400000 | 400 | No access |
+| 100400001 | 400 | Invalid URL |
+| 100400002 | 400 | Bad Request |
+| 100401000 | 401 | Token is expired |
+| 100500000 | 500 | Internal error |
+
+### API-Specific Errors
+
+| Error Code | HTTP Status | Message |
+|------------|-------------|---------|
+| 110400000 | 400 | api_key is not valid |
+| 110402000 | 402 | The coins are not enough |
+
+---
+
+## Python Complete Example
+
+```python
+import requests
+import time
+import json
+
+class HitPawAIClient:
+    def __init__(self, api_key, base_url="https://api-base.hitpaw.com"):
+        self.api_key = api_key
+        self.base_url = base_url
+        self.headers = {
+            "Content-Type": "application/json",
+            "Apikey": api_key
+        }
+    
+    def segment_image(self, file_url):
+        """Submit an image segmentation job"""
+        url = f"{self.base_url}/api/image-segmentation"
+        payload = {"file_url": file_url}
+        response = requests.post(url, headers=self.headers, data=json.dumps(payload))
+        
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception(f"Error {response.status_code}: {response.text}")
+    
+    def check_status(self, job_id):
+        """Check job status"""
+        url = f"{self.base_url}/api/task-status"
+        payload = {"job_id": job_id}
+        response = requests.post(url, headers=self.headers, data=json.dumps(payload))
+        
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception(f"Error {response.status_code}: {response.text}")
+
+    def wait_for_completion(self, job_id, max_attempts=120, poll_interval=5):
+        """Poll job status until completion or error"""
+        attempt = 0
+        while attempt < max_attempts:
+            result = self.check_status(job_id)
+            status = result['data']['status']
+            print(f"[Attempt {attempt + 1}] Status: {status}")
+            
+            if status == "COMPLETED":
+                return result['data']
+            elif status == "ERROR":
+                raise Exception("Job failed with ERROR status")
+            
+            time.sleep(poll_interval)
+            attempt += 1
+            
+        raise Exception("Polling timeout")
+
+if __name__ == "__main__":
+    client = HitPawAIClient(api_key="YOUR_API_KEY")
+    
+    try:
+        print("Submitting Image Segmentation Task...")
+        job = client.segment_image("https://example.com/input.jpg")
+        job_id = job['data']['job_id']
+        print(f"Job ID: {job_id}")
+        
+        print("Polling for results...")
+        result = client.wait_for_completion(job_id)
+        
+        print("Task Completed Successfully!")
+        print(f"Matted Result URL: {result.get('res_url')}")
+        print(f"Mask URL: {result.get('mask_url')}")
+            
+    except Exception as e:
+        print(f"Task Failed: {e}")
+```
+
+## Best Practices
+
+1. **Format Capabilities**: The API supports `.jpg`, `.jpeg`, `.png`, and `.webp`
+2. **Access Rights**: Ensure your `file_url` inputs can be publicly accessed for our servers to securely fetch them.
+3. **Validity Length**: A `job_id` and the returned output media files will only be valid and retrievable for 8 days after completion.
+4. **Polling Intervals**: After submitting a job, interval status polls using the `/task-status` endpoint at a ~2-5s cadence for the quickest real-time response capture.
