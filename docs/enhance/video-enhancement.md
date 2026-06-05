@@ -42,7 +42,8 @@ HitPaw API uses a credit-based billing system.
   "model_name": "string",
   "resolution": [1920, 1080],
   "extension": "string",
-  "original_resolution": [1280, 720]
+  "original_resolution": [1280, 720],
+  "frame_rate": 0
 }
 ```
 
@@ -55,6 +56,7 @@ HitPaw API uses a credit-based billing system.
 | resolution | array[integer] | Yes | Target resolution [width, height] |
 | extension | string | No | File extension (default: ".mp4") |
 | original_resolution | array[integer] | No | Original video resolution [width, height] |
+| frame_rate | number | No | Target frame rate (required only for `frame_interpolation` model, max 120) |
 
 :::tip Use Pre-sign Upload for Better Reliability
 If you encounter download failures or network instability when our servers attempt to fetch your resources via `video_url`, we highly recommend using our [OSS Pre-sign Upload API](../common/oss-storage.md) to securely upload your files first. Provide the generated `access_url` as your `video_url` to guarantee a 100% success rate for resource retrieval.
@@ -86,7 +88,7 @@ curl -X POST https://api-base.hitpaw.com/api/video-enhancer \
   -H "Apikey: YOUR_API_KEY" \
   -d '{
     "video_url": "https://example.com/video.mp4",
-    "model_name": "video_enhance_v2",
+    "model_name": "general_restore_2x",
     "resolution": [1920, 1080],
     "extension": ".mp4",
     "original_resolution": [1280, 720]
@@ -107,7 +109,7 @@ headers = {
 
 payload = {
     "video_url": "https://example.com/video.mp4",
-    "model_name": "video_enhance_v2",
+    "model_name": "general_restore_2x",
     "resolution": [1920, 1080],
     "extension": ".mp4",
     "original_resolution": [1280, 720]
@@ -134,12 +136,13 @@ Use the following values for the `model_name` parameter:
 | General Restore Model 1x/2x/4x | `general_restore_1x` / `general_restore_2x` / `general_restore_4x` |
 | Ultra HD Model 2x | `ultrahd_restore_2x` |
 | Generative Model 1x | `generative_1x` |
+| Frame Interpolation | `frame_interpolation` |
 
 ## Model Specifications
 
-| API `model_name` | Supported Input Formats | Max Input Resolution | Supported Output Formats | Max Output Resolution | Duration |
+| API `model_name` | Supported Input Formats | Max Input Resolution | Supported Output Formats | Max Output Resolution | Duration / Frame Rate Limits |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **All Video Models** | dv,mlv,m2ts,m2t,m2v,nut,ser,3g2,3gp,asf,avi,divx,f4v,flv,h261,h263,m4v,mkv,mov,mp4,mpeg,mpeg4,mpg,mxf,ogv,rm,rmvb,webm,wmv,3gp2,dmsm,dvdmedia,dvr-ms,trp,vob,vro,gif,xvid | No limit | mp4, mov, mkv, m4v, avi, gif | 36 MP (Total Pixels) | 0.5s to 1 hour |
+| **All Video Models** | dv,mlv,m2ts,m2t,m2v,nut,ser,3g2,3gp,asf,avi,divx,f4v,flv,h261,h263,m4v,mkv,mov,mp4,mpeg,mpeg4,mpg,mxf,ogv,rm,rmvb,webm,wmv,3gp2,dmsm,dvdmedia,dvr-ms,trp,vob,vro,gif,xvid | 36 MP (Total Pixels) | mp4, mov, mkv, m4v, avi, gif | 36 MP (Total Pixels) | 0.5s to 1 hour (For `frame_interpolation`, target frame rate is capped at 120 FPS) |
 
 ## Task Status
 
@@ -361,7 +364,7 @@ class HitPawAPIClient:
         }
     
     def enhance_video(self, video_url, model_name, resolution, extension=".mp4", 
-                     original_resolution=None):
+                     original_resolution=None, frame_rate=None):
         """Submit a video enhancement job"""
         url = f"{self.base_url}/api/video-enhancer"
         payload = {
@@ -373,6 +376,8 @@ class HitPawAPIClient:
         
         if original_resolution:
             payload["original_resolution"] = original_resolution
+        if frame_rate is not None:
+            payload["frame_rate"] = frame_rate
         
         response = requests.post(url, headers=self.headers, data=json.dumps(payload))
         
@@ -431,7 +436,7 @@ if __name__ == "__main__":
         print("=== Video Enhancement ===")
         video_result = client.enhance_video(
             video_url="https://example.com/video.mp4",
-            model_name="video_enhance_v2",
+            model_name="general_restore_2x",
             resolution=[1920, 1080],
             original_resolution=[1280, 720]
         )

@@ -101,6 +101,16 @@ A general-purpose interface for restoring fine details in videos. Based on GAN t
   </video>
 </div>
 
+### Video Motion Interpolation
+*Corresponding to: Frame Interpolation Model*
+
+**Overview:**
+An interface for video motion interpolation that increases and smooths the motion frame rate. It generates intermediate frames to reduce motion blur and make action look extremely fluid.
+
+**Technical Features:**
+*   **Target Frame Rate Specification:** Requires specifying the target frame rate via the `frame_rate` parameter (supports up to `120` FPS).
+*   **High-Speed Motion Smoothing:** Ideal for sports, high-action footage, or low-fps recordings that need to be upscaled to cinema-grade high frame rates without introducing artificial warping artifacts.
+
 ---
 
 ## 2. Image Enhancement Models

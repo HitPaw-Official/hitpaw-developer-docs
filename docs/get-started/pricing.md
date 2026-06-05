@@ -85,6 +85,30 @@ Video processing is billed **per second** of output video. The rate is determine
 | **4K (3840x2160)** | 60 - 120 fps | **225** | $0.225 |
 | **4K (3840x2160)** | 120 fps | **338** | $0.338 |
 
+### Frame Interpolation Model
+**Applicable Models:** *Frame Interpolation*
+
+*Note: For frame interpolation, the resolution is fixed to the input resolution, and the rate is determined by the target frame rate (`frame_rate`).*
+
+| Output Resolution | Frame Rate (FPS) | Credits (per sec) | Price (USD/sec) |
+| :--- | :--- | :--- | :--- |
+| **HD (1280x720)** | ≤ 30 fps | **15** | $0.015 |
+| **HD (1280x720)** | 30 - 60 fps | **30** | $0.030 |
+| **HD (1280x720)** | 60 - 120 fps | **60** | $0.060 |
+| **HD (1280x720)** | 120 fps | **90** | $0.090 |
+| **FHD (1920x1080)** | ≤ 30 fps | **20** | $0.020 |
+| **FHD (1920x1080)** | 30 - 60 fps | **39** | $0.039 |
+| **FHD (1920x1080)** | 60 - 120 fps | **78** | $0.078 |
+| **FHD (1920x1080)** | 120 fps | **117** | $0.117 |
+| **2K (2560x1440)** | ≤ 30 fps | **25** | $0.025 |
+| **2K (2560x1440)** | 30 - 60 fps | **51** | $0.051 |
+| **2K (2560x1440)** | 60 - 120 fps | **101** | $0.101 |
+| **2K (2560x1440)** | 120 fps | **152** | $0.152 |
+| **4K (3840x2160) and above** | ≤ 30 fps | **33** | $0.033 |
+| **4K (3840x2160) and above** | 30 - 60 fps | **66** | $0.066 |
+| **4K (3840x2160) and above** | 60 - 120 fps | **132** | $0.132 |
+| **4K (3840x2160) and above** | 120 fps | **198** | $0.198 |
+
 ---
 
 ## 2. Image Enhancement Pricing
