@@ -104,6 +104,11 @@ const config: Config = {
         },
         //{ to: '/blog', label: 'API Reference', position: 'left' },
         {
+          href: 'https://forms.gle/Kh8DVXjk8bs9SNoY7',
+          label: 'Apply for Credits',
+          position: 'right',
+        },
+        {
           href: 'https://github.com/HitPaw-Official',
           label: 'GitHub',
           position: 'right',
@@ -147,6 +152,10 @@ const config: Config = {
             {
               label: 'GitHub',
               href: 'https://github.com/HitPaw-Official',
+            },
+            {
+              label: 'Apply for Trial Credits',
+              href: 'https://forms.gle/Kh8DVXjk8bs9SNoY7',
             },
           ],
         },

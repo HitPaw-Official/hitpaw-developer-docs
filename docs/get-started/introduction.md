@@ -47,5 +47,5 @@ Our video processing services provide industrial-grade solutions for restoring a
 *   **Versatility:** With both **Standard** (accurate) and **Generative** (creative) options, you can choose the exact tool needed for restoration vs. reconstruction workflows.
 
 :::tip Ready to Start?
-Check out the [Quick Start](./quick-start.md) guide to get your API key, or explore the [Available Models](./available-models.md).
+Check out the [Quick Start](./quick-start.md) guide to get your API key, apply for free trial credits via the [Request API Test Key Form](https://forms.gle/Kh8DVXjk8bs9SNoY7), or explore the [Available Models](./available-models.md).
 :::

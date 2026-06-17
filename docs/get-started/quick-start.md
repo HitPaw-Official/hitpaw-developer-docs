@@ -13,7 +13,7 @@ You will need an API key in order to make requests to this API. Make sure you ne
 
 Once you have your API key, set it as the `Apikey` header of your HTTP requests.
 
-*   **Don't have an API key?** Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html).
+*   **Don't have an API key?** Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html), or apply for free trial credits via our [Request API Test Key Form](https://forms.gle/Kh8DVXjk8bs9SNoY7).
 *   **Already have your API Key?** Skip the local setup and test the API directly in your browser. [Explore Playground →](https://playground.hitpaw.com/)
 
 ### Example Request

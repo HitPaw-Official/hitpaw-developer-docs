@@ -159,5 +159,5 @@ These AI tools are billed **per image** at a flat rate, regardless of the output
 | **Image Moderation** | **5** | $0.005 |
 
 :::tip Ready to Start?
-Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw API.
+Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access, or apply for free trial credits using our [Request API Test Key Form](https://forms.gle/Kh8DVXjk8bs9SNoY7).
 :::
