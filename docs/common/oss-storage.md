@@ -428,6 +428,6 @@ suspend fun presignUpload(file: File): String {
 | 500              | Server error: OSS client not initialized, signature generation failed, etc. |
 
 :::tip Ready to Start?
-Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw Enhancement API.
+Get started by purchasing and managing your keys on the [HitPaw API Platform](https://platform.hitpaw.com/) to unlock full access to the HitPaw Enhancement API.
 :::
 

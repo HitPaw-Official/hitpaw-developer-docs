@@ -79,7 +79,7 @@ jobs:
             const payload = {
               msgtype: 'markdown',
               markdown: {
-                content: '### 🚀 HitPaw API 有新的更新啦！\n\n**更新主题**：' + title + '\n\n**更新摘要**：\n' + summary + '\n\n[点击查看完整 Changelog](https://docs.hitpaw.com/changelog)'
+                content: '### 🚀 HitPaw API Documentation 有新的更新啦！\n\n**更新主题**：' + title + '\n\n**更新摘要**：\n' + summary + '\n\n[点击查看完整 Changelog](https://developer.hitpaw.com/changelog)'
               }
             };
             

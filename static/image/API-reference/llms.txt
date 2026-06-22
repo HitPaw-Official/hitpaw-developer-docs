@@ -8,8 +8,8 @@ https://api-base.hitpaw.com
 ## Authentication
 All API requests require authentication.
 
-- Don't have an API key? Get started by purchasing an API key:
-  https://www.hitpaw.com/hitpaw-api.html
+- Don't have an API key? Get started by purchasing and managing keys on the HitPaw API Platform:
+  https://platform.hitpaw.com/
 - Already have your API key? Test the API directly in the browser:
   https://playground.hitpaw.com/
 

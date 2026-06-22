@@ -21,7 +21,7 @@ https://api-base.hitpaw.com
 
 ## Authentication
 All API requests require authentication. 
-*   **Don't have an API key?** Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html).
+*   **Don't have an API key?** Get started by purchasing and managing your keys on our [API Platform](https://platform.hitpaw.com/).
 
 ## Billing & Credits
 HitPaw API uses a credit-based billing system.
@@ -241,5 +241,5 @@ if __name__ == "__main__":
 4. **Polling Intervals**: After submitting a job, interval status polls using the `/task-status` endpoint at a ~2-5s cadence for the quickest real-time response capture.
 
 :::tip Ready to Start?
-Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw API.
+Get started by purchasing and managing your keys on the [HitPaw API Platform](https://platform.hitpaw.com/) to unlock full access to the HitPaw API.
 :::

@@ -119,6 +119,6 @@ Use this page together with the API model list when selecting a model:
 - [HitPaw MCP Server on GitHub](https://github.com/HitPaw-Official/hitpaw-mcp-server)
 
 :::tip Ready to Start?
-Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw Enhancement API.
+Get started by purchasing and managing your keys on the [HitPaw API Platform](https://platform.hitpaw.com/) to unlock full access to the HitPaw Enhancement API.
 :::
 

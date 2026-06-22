@@ -21,7 +21,7 @@ https://api-base.hitpaw.com
 
 ## Authentication
 All API requests require authentication. 
-*   **Don't have an API key?** Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html).
+*   **Don't have an API key?** Get started by purchasing and managing your keys on our [API Platform](https://platform.hitpaw.com/).
 *   **Already have your API Key?** Skip the local setup and test the API directly in your browser. [Explore Playground →](https://playground.hitpaw.com/)
 
 ## Billing & Credits
@@ -475,6 +475,6 @@ if __name__ == "__main__":
 For API key requests, billing questions, or technical support, please contact our support team.
 
 :::tip Ready to Start?
-Get started by [Purchasing an API Key Now](https://www.hitpaw.com/hitpaw-api.html) to unlock full access to the HitPaw API.
+Get started by purchasing and managing your keys on the [HitPaw API Platform](https://platform.hitpaw.com/) to unlock full access to the HitPaw API.
 :::
 
