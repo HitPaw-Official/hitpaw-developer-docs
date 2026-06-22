@@ -83,6 +83,16 @@ This guide provides answers to frequently asked questions and troubleshooting st
 </details>
 
 <details>
+  <summary><b>Q: My task status remains stuck in <code>CONVERTING</code> (e.g., over 15 minutes) or fails silently. What causes this?</b></summary>
+  <div>
+    <p>This typically happens when our servers encounter network timeouts or permissions barriers while downloading the source file from your external storage provider (such as <b>Firebase Storage</b>, <b>AWS S3</b>, or <b>Google Cloud Storage</b>).</p>
+    <p>Certain cloud storage configurations block automated user-agent downloads or suffer from cross-region routing latency that blocks our download pipeline.</p>
+    <p><b>Solution:</b> Use our <a href="./common/oss-storage">OSS Pre-sign Upload API</a> to upload the image or video directly to our local environment before triggering the task. This ensures maximum stability and speed.</p>
+    <p><i>Note: Staged source files uploaded to our storage are kept for only <b>7 days</b> before automatic deletion.</i></p>
+  </div>
+</details>
+
+<details>
   <summary><b>Q: What are the input media file limits?</b></summary>
   <div>
     <p>Please observe the following limits to prevent validation errors:</p>

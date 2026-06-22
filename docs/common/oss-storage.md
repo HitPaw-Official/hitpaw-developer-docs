@@ -19,6 +19,10 @@ import LLMPageActions from '@site/src/components/LLMPageActions';
 
 The pre-sign upload mechanism allows clients (Web, Mobile, Desktop) to upload files directly to Alibaba Cloud OSS using a signed URL. This eliminates the need for clients to hold AccessKeys or manually set signature headers, ensuring a secure and streamlined upload process.
 
+:::note Retention Policy
+Files successfully uploaded using this pre-sign upload mechanism are temporary staging files and will be automatically deleted from our servers after **7 days**.
+:::
+
 **Workflow:**
 
 1. [Step 1](#step-1-get-pre-signed-upload-url): The client requests a pre-signed PUT URL from the server.
