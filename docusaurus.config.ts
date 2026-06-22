@@ -37,7 +37,24 @@ const config: Config = {
   headTags: [
     {
       tagName: 'script',
-      innerHTML: 'window.gtag = window.gtag || function(){};',
+      innerHTML: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        
+        var initialConsent = 'denied';
+        try {
+          if (localStorage.getItem('cookie-consent') === 'accepted') {
+            initialConsent = 'granted';
+          }
+        } catch (e) {}
+        
+        gtag('consent', 'default', {
+          'ad_storage': initialConsent,
+          'ad_user_data': initialConsent,
+          'ad_personalization': initialConsent,
+          'analytics_storage': initialConsent
+        });
+      `,
       attributes: {},
     },
   ],
@@ -156,6 +173,19 @@ const config: Config = {
             {
               label: 'Apply for Trial Credits',
               href: 'https://forms.gle/Kh8DVXjk8bs9SNoY7',
+            },
+          ],
+        },
+        {
+          title: 'Legal',
+          items: [
+            {
+              label: 'Privacy Policy',
+              href: 'https://www.hitpaw.com/privacy-policy.html',
+            },
+            {
+              label: 'Terms & Conditions',
+              href: 'https://www.hitpaw.com/terms-and-conditions.html',
             },
           ],
         },
