@@ -85,10 +85,14 @@ This guide provides answers to frequently asked questions and troubleshooting st
 <details>
   <summary><b>Q: My task status remains stuck in <code>CONVERTING</code> (e.g., over 15 minutes) or fails silently. What causes this?</b></summary>
   <div>
-    <p>This typically happens when our servers encounter network timeouts or permissions barriers while downloading the source file from your external storage provider (such as <b>Firebase Storage</b>, <b>AWS S3</b>, or <b>Google Cloud Storage</b>).</p>
-    <p>Certain cloud storage configurations block automated user-agent downloads or suffer from cross-region routing latency that blocks our download pipeline.</p>
-    <p><b>Solution:</b> Use our <a href="./common/oss-storage">OSS Pre-sign Upload API</a> to upload the image or video directly to our local environment before triggering the task. This ensures maximum stability and speed.</p>
-    <p><i>Note: Staged source files uploaded to our storage are kept for only <b>7 days</b> before automatic deletion.</i></p>
+    <p>A prolonged <code>CONVERTING</code> state typically stems from one of two reasons:</p>
+    <p><b>1. Network Timeouts (Most Common)</b><br/>
+    Our servers may have encountered network timeouts or permissions barriers while trying to download the source file from your external storage provider (such as <b>Firebase Storage</b>, <b>AWS S3</b>, or <b>Google Cloud Storage</b>).<br/>
+    <i>Solution:</i> Use our <a href="./common/oss-storage">OSS Pre-sign Upload API</a> to upload the image or video directly to our local environment before triggering the task. This ensures maximum stability. (Note: Staged source files uploaded to our storage are kept for only <b>7 days</b>).</p>
+    
+    <p><b>2. High Server Load & Queueing</b><br/>
+    If you are already using our OSS Pre-sign Upload API and still experience long <code>CONVERTING</code> times, it indicates a temporary surge in API requests causing a queue on our GPU servers.<br/>
+    <i>Solution:</i> This is normal during peak traffic. Please ensure your application implements adequate timeout limits (e.g., waiting longer) and continues to poll the status. Do not assume the task has failed until the API explicitly returns an <code>ERROR</code> status.</p>
   </div>
 </details>
 
