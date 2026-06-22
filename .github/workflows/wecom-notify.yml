@@ -1,0 +1,123 @@
+name: Sync Changelog to WeCom
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'changelog/**'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Send Notification to WeCom
+        env:
+          WECOM_WEBHOOK_KEY: ${{ secrets.WECOM_WEBHOOK_KEY }}
+        run: |
+          node -e "
+          const fs = require('fs');
+          const execSync = require('child_process').execSync;
+          const https = require('https');
+
+          try {
+            const diffOutput = execSync('git diff --name-only HEAD~1 HEAD').toString();
+            const changedFiles = diffOutput.split('\n').map(f => f.trim());
+            const changelogFile = changedFiles.find(f => f.startsWith('changelog/') && (f.endsWith('.md') || f.endsWith('.mdx')));
+            
+            if (!changelogFile) {
+              console.log('No changelog markdown files changed in this commit.');
+              process.exit(0);
+            }
+            
+            console.log('Processing file:', changelogFile);
+            if (!fs.existsSync(changelogFile)) {
+              console.log('File does not exist (might have been deleted). Skipping notification.');
+              process.exit(0);
+            }
+            
+            const content = fs.readFileSync(changelogFile, 'utf8');
+            
+            let title = 'API Update';
+            let body = '';
+            
+            // Parse Front Matter
+            const frontMatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+            if (frontMatterMatch) {
+              const yamlLines = frontMatterMatch[1].split('\n');
+              for (const line of yamlLines) {
+                if (line.trim().startsWith('title:')) {
+                  title = line.replace('title:', '').trim().replace(/^['\"]|['\"]$/g, '');
+                  break;
+                }
+              }
+              body = content.replace(frontMatterMatch[0], '').trim();
+            } else {
+              body = content.trim();
+            }
+            
+            // Clean up standard Markdown tags that are not ideal in QiWei summary cards
+            body = body.replace(/<!--\s*truncate\s*-->/gi, '');
+            
+            // Filter out empty lines, headers, images
+            const summaryLines = body.split('\n')
+              .map(line => line.trim())
+              .filter(line => line.length > 0 && !line.startsWith('#') && !line.startsWith('!') && !line.startsWith('<!--'));
+            
+            // Take the first 5 lines for summary
+            let summary = summaryLines.slice(0, 5).join('\n');
+            if (summary.length > 300) {
+              summary = summary.substring(0, 300) + '...';
+            }
+            
+            // Prepare payload for Enterprise WeChat (WeCom) Webhook
+            const payload = {
+              msgtype: 'markdown',
+              markdown: {
+                content: '### 🚀 HitPaw API 有新的更新啦！\n\n**更新主题**：' + title + '\n\n**更新摘要**：\n' + summary + '\n\n[点击查看完整 Changelog](https://docs.hitpaw.com/changelog)'
+              }
+            };
+            
+            const webhookKey = process.env.WECOM_WEBHOOK_KEY;
+            if (!webhookKey) {
+              console.error('Error: WECOM_WEBHOOK_KEY is not defined.');
+              process.exit(1);
+            }
+            
+            const postData = JSON.stringify(payload);
+            const options = {
+              hostname: 'qyapi.weixin.qq.com',
+              port: 443,
+              path: '/cgi-bin/webhook/send?key=' + webhookKey,
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(postData)
+              }
+            };
+            
+            const req = https.request(options, (res) => {
+              console.log('StatusCode:', res.statusCode);
+              res.on('data', (d) => {
+                process.stdout.write(d);
+              });
+            });
+            
+            req.on('error', (error) => {
+              console.error(error);
+              process.exit(1);
+            });
+            
+            req.write(postData);
+            req.end();
+            
+          } catch (err) {
+            console.error('Error executing notify script:', err);
+            process.exit(1);
+          }
+          "

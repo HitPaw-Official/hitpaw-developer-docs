@@ -1,0 +1,19 @@
+feature:
+  label: Feature
+  permalink: /feature
+  description: New features and major additions
+
+improvement:
+  label: Improvement
+  permalink: /improvement
+  description: Enhancements and optimizations to existing features
+
+security:
+  label: Security
+  permalink: /security
+  description: Privacy and security-related updates
+
+api:
+  label: API
+  permalink: /api
+  description: API interface and specification changes

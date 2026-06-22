@@ -72,7 +72,13 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
         },
         blog: {
-          showReadingTime: true,
+          routeBasePath: 'changelog',
+          path: './changelog',
+          blogTitle: 'Changelog',
+          blogDescription: 'HitPaw API Changelog & Updates',
+          showReadingTime: false,
+          blogSidebarTitle: 'Recent Updates',
+          blogSidebarCount: 'ALL',
           feedOptions: {
             type: ['rss', 'atom'],
             xslt: true,
@@ -119,7 +125,7 @@ const config: Config = {
           label: 'Documentation',
           to: '/',
         },
-        //{ to: '/blog', label: 'API Reference', position: 'left' },
+        { to: '/changelog', label: 'Changelog', position: 'left' },
         {
           href: 'https://forms.gle/Kh8DVXjk8bs9SNoY7',
           label: 'Apply for Credits',
